@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const { handleObjectNotFound } = require('../utils/utils');
-const { secret } = require('../config/constants');
+const { secret } = require('../config/config');
 
 module.exports.getCurrentUser = (req, res, next) => {
   const userId = req.user._id;

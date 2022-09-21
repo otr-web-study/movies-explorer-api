@@ -1,17 +1,10 @@
-require('dotenv').config();
-
-const {
-  JWT_SECRET = 'some-secret-key',
-  PORT = 3000,
-  NODE_ENV = 'develop',
-  MONGO_ADDR = 'localhost',
-  MONGO_PORT = '27017',
-  DB_NAME = 'moviesdb',
-} = process.env;
-
-module.exports.secret = JWT_SECRET;
-module.exports.PORT = PORT;
-module.exports.NODE_ENV = NODE_ENV;
-module.exports.MONGO_ADDR = MONGO_ADDR;
-module.exports.MONGO_PORT = MONGO_PORT;
-module.exports.DB_NAME = DB_NAME;
+module.exports.MESSAGE_MOVIE_DELETED = 'Фильм удалён';
+module.exports.MESSAGE_NEEDS_AUTHORIZATION = 'Требуется авторизация.';
+module.exports.MESSAGE_WRONG_JWT = 'Ошибочный jwt-токен.';
+module.exports.ERROR_REQUIRED_FIELD = 'Поле обязательно к заполнению.';
+module.exports.ERROR_WRONG_URL = 'Некорректный url.';
+module.exports.ERROR_MIN_LENGTH = 'Минимальная длина значения: ';
+module.exports.ERROR_MAX_LENGTH = 'Максимальная длина значения: ';
+module.exports.ERROR_UNIQ_EMAIL = 'Пользователь с таким email уже существует.';
+module.exports.ERROR_WRONG_EMAIL = 'Некорректный email.';
+module.exports.ERROR_WRONG_PATH = 'Несуществующий путь.';

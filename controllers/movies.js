@@ -1,5 +1,6 @@
 const Movie = require('../models/movie');
 const { handleObjectNotFound, isCurrentUserOwner } = require('../utils/utils');
+const { MESSAGE_MOVIE_DELETED } = require('../config/constants');
 
 module.exports.getMovies = (req, res, next) => {
   Movie.find({})
@@ -16,7 +17,7 @@ module.exports.createMovie = (req, res, next) => {
     year,
     description,
     image,
-    trailer,
+    trailerLink,
     nameRU,
     nameEN,
     thumbnail,
@@ -31,7 +32,7 @@ module.exports.createMovie = (req, res, next) => {
     year,
     description,
     image,
-    trailer,
+    trailerLink,
     nameRU,
     nameEN,
     thumbnail,
@@ -44,12 +45,12 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  const { movieId } = req.params;
+  const { _id } = req.params;
 
-  Movie.findById(movieId)
+  Movie.findById(_id)
     .then(handleObjectNotFound)
     .then((movie) => isCurrentUserOwner(req, movie))
     .then((movie) => movie.remove())
-    .then(() => res.send({ message: 'Фильм удалён' }))
+    .then(() => res.send({ message: MESSAGE_MOVIE_DELETED }))
     .catch(next);
 };

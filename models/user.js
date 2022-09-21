@@ -3,25 +3,28 @@ const bcrypt = require('bcryptjs');
 const { isEmail } = require('validator');
 const { handleObjectNotFound } = require('../utils/utils');
 const AuthError = require('../errors/AuthError');
+const {
+  ERROR_REQUIRED_FIELD, ERROR_MIN_LENGTH, ERROR_MAX_LENGTH, ERROR_UNIQ_EMAIL, ERROR_WRONG_EMAIL,
+} = require('../config/constants');
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    minlength: [2, 'Минимальная длина значения: 2'],
-    maxlength: [30, 'Максимальная длина значения: 30'],
+    minlength: [2, `${ERROR_MIN_LENGTH}${2}`],
+    maxlength: [30, `${ERROR_MAX_LENGTH}${30}`],
   },
   email: {
     type: String,
-    required: [true, 'Поле обязательно к заполнению.'],
-    unique: [true, 'Пользователь с таким email уже существует.'],
-    validate: [isEmail, 'Некорректный email.'],
+    required: [true, ERROR_REQUIRED_FIELD],
+    unique: [true, ERROR_UNIQ_EMAIL],
+    validate: [isEmail, ERROR_WRONG_EMAIL],
   },
   password: {
     type: String,
-    required: [true, 'Поле обязательно к заполнению.'],
+    required: [true, ERROR_REQUIRED_FIELD],
     select: false,
   },
-});
+}, { versionKey: false });
 
 function findUserByCredentials(email, password) {
   return this.findOne({ email })

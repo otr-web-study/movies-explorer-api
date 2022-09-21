@@ -8,7 +8,7 @@ const handleError = (err) => {
   }
 
   if (err.name === 'ValidationError' || err.name === 'CastError') {
-    return new ValidationError();
+    return new ValidationError(`Validation error: ${err.message}`);
   }
 
   if (err.code === 11000) {

@@ -1,43 +1,42 @@
 const mongoose = require('mongoose');
 const { isURL } = require('validator');
+const { ERROR_REQUIRED_FIELD, ERROR_WRONG_URL } = require('../config/constants');
 
 const movieSchema = new mongoose.Schema({
   country: {
     type: String,
-    required: [true, 'Поле обязательно к заполнению.'],
+    required: [true, ERROR_REQUIRED_FIELD],
   },
   director: {
     type: String,
-    required: [true, 'Поле обязательно к заполнению.'],
+    required: [true, ERROR_REQUIRED_FIELD],
   },
   duration: {
     type: Number,
-    required: [true, 'Поле обязательно к заполнению.'],
+    required: [true, ERROR_REQUIRED_FIELD],
   },
   year: {
     type: String,
-    required: [true, 'Поле обязательно к заполнению.'],
-    minlength: [4, 'Минимальная длина значения: 4'],
-    maxlength: [4, 'Максимальная длина значения: 4'],
+    required: [true, ERROR_REQUIRED_FIELD],
   },
   description: {
     type: String,
-    required: [true, 'Поле обязательно к заполнению.'],
+    required: [true, ERROR_REQUIRED_FIELD],
   },
   image: {
     type: String,
-    required: [true, 'Поле обязательно к заполнению.'],
-    validate: [isURL, 'Некорректный url.'],
+    required: [true, ERROR_REQUIRED_FIELD],
+    validate: [isURL, ERROR_WRONG_URL],
   },
   trailerLink: {
     type: String,
-    required: [true, 'Поле обязательно к заполнению.'],
-    validate: [isURL, 'Некорректный url.'],
+    required: [true, ERROR_REQUIRED_FIELD],
+    validate: [isURL, ERROR_WRONG_URL],
   },
   thumbnail: {
     type: String,
-    required: [true, 'Поле обязательно к заполнению.'],
-    validate: [isURL, 'Некорректный url.'],
+    required: [true, ERROR_REQUIRED_FIELD],
+    validate: [isURL, ERROR_WRONG_URL],
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
@@ -45,18 +44,17 @@ const movieSchema = new mongoose.Schema({
   },
   movieId: {
     type: String,
-    required: [true, 'Поле обязательно к заполнению.'],
-    minlength: [24, 'Минимальная длина значения: 24'],
-    maxlength: [24, 'Максимальная длина значения: 24'],
+    required: [true, ERROR_REQUIRED_FIELD],
   },
   nameRU: {
     type: String,
-    required: [true, 'Поле обязательно к заполнению.'],
+    required: [true, ERROR_REQUIRED_FIELD],
   },
   nameEN: {
     type: String,
-    required: [true, 'Поле обязательно к заполнению.'],
+    required: [true, ERROR_REQUIRED_FIELD],
   },
-});
+}, { versionKey: false });
+movieSchema.index({ owner: 1, movieId: 1 }, { unique: true });
 
 module.exports = mongoose.model('movie', movieSchema);
