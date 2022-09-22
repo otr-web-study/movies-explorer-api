@@ -3,7 +3,9 @@ const { handleObjectNotFound, isCurrentUserOwner } = require('../utils/utils');
 const { MESSAGE_MOVIE_DELETED } = require('../config/constants');
 
 module.exports.getMovies = (req, res, next) => {
-  Movie.find({})
+  const owner = req.user._id;
+
+  Movie.find({ owner })
     .populate('owner')
     .then((movie) => res.send(movie))
     .catch(next);
