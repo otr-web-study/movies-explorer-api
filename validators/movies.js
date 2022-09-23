@@ -1,12 +1,19 @@
 const { Joi } = require('celebrate');
 const { isValidObjectId } = require('mongoose');
+const { isURL } = require('validator');
 const ValidationError = require('../errors/ValidationError');
-
-const URL_PATTERN = /^http(s)?:\/\/(www.)?([\w-]+\.)*[\w-]+\.[\w]{2,5}(\/[\w\-?=.&]+|\/)*/;
+const { ERROR_WRONG_ID, ERROR_WRONG_URL } = require('../config/constants');
 
 function validateId(value) {
   if (!isValidObjectId(value)) {
-    throw new ValidationError('Некорректный id.');
+    throw new ValidationError(ERROR_WRONG_ID);
+  }
+  return value;
+}
+
+function validateURL(value) {
+  if (!isURL(value)) {
+    throw new ValidationError(ERROR_WRONG_URL);
   }
   return value;
 }
@@ -18,10 +25,10 @@ module.exports.ruleCreateMovie = {
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().required().pattern(URL_PATTERN),
-    trailerLink: Joi.string().required().pattern(URL_PATTERN),
-    thumbnail: Joi.string().required().pattern(URL_PATTERN),
-    movieId: Joi.string().required(),
+    image: Joi.string().required().custom(validateURL),
+    trailerLink: Joi.string().required().custom(validateURL),
+    thumbnail: Joi.string().required().custom(validateURL),
+    movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
   }),

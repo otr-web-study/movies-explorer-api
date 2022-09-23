@@ -10,6 +10,7 @@ const {
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
+    required: [true, ERROR_REQUIRED_FIELD],
     minlength: [2, `${ERROR_MIN_LENGTH}${2}`],
     maxlength: [30, `${ERROR_MAX_LENGTH}${30}`],
   },

@@ -1,6 +1,7 @@
 const ValidationError = require('../errors/ValidationError');
 const CommonServerError = require('../errors/CommonServerError');
 const ConflictError = require('../errors/ConflictError');
+const { MESSAGE_ERROR_HAPPENED, ERROR_VALIDATION } = require('../config/constants');
 
 const handleError = (err) => {
   if (err.statusCode) {
@@ -8,7 +9,7 @@ const handleError = (err) => {
   }
 
   if (err.name === 'ValidationError' || err.name === 'CastError') {
-    return new ValidationError(`Validation error: ${err.message}`);
+    return new ValidationError(`${ERROR_VALIDATION}: ${err.message}`);
   }
 
   if (err.code === 11000) {
@@ -22,7 +23,7 @@ module.exports = (err, req, res, next) => {
   const { statusCode, message } = handleError(err);
 
   res.status(statusCode).send({
-    message: `Произошла ошибка: ${message}`,
+    message: `${MESSAGE_ERROR_HAPPENED}${message}`,
   });
   next();
 };

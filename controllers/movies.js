@@ -6,7 +6,6 @@ module.exports.getMovies = (req, res, next) => {
   const owner = req.user._id;
 
   Movie.find({ owner })
-    .populate('owner')
     .then((movie) => res.send(movie))
     .catch(next);
 };
@@ -41,7 +40,6 @@ module.exports.createMovie = (req, res, next) => {
     movieId,
     owner,
   })
-    .then((movie) => movie.populate('owner'))
     .then((movie) => res.status(201).send(movie))
     .catch(next);
 };
