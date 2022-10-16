@@ -26,7 +26,6 @@ const movieSchema = new mongoose.Schema({
   image: {
     type: String,
     required: [true, ERROR_REQUIRED_FIELD],
-    validate: [isURL, ERROR_WRONG_URL],
   },
   trailerLink: {
     type: String,
@@ -36,7 +35,6 @@ const movieSchema = new mongoose.Schema({
   thumbnail: {
     type: String,
     required: [true, ERROR_REQUIRED_FIELD],
-    validate: [isURL, ERROR_WRONG_URL],
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
